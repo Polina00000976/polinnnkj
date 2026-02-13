@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Конфигуратор облачного сервера — Selectel</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-left">
+      <b class="navbar-brand">Selectel</b>
+      <a href="index.html" class="nav-link">Страница 1</a>
+      <a href="page2.html" class="nav-link">Страница 2</a>
+    </div>
+    <div class="navbar-actions">
+      <div class="region-select">
+        <select id="region" aria-label="Выбор региона">
+          <option value="ru-1">RU-1 (Санкт-Петербург)</option>
+          <option value="ru-2">RU-2 (Москва)</option>
+        </select>
+      </div>
+      <button type="button" class="btn-nav">Создать сервер</button>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <h1 class="hero-title">Создание облачного сервера</h1>
+    <p class="hero-sub">Соберите конфигурацию под свою нагрузку</p>
+  </div>
+
+  <main class="main">
+    <!-- Слева: одна карточка с свитчером Час / Месяц / Год -->
+    <div class="left">
+      <div class="summary-card">
+        <h2 class="pricing-heading">Итоговая стоимость</h2>
+        <p class="pricing-sub">Полная сумма сразу — без сюрпризов при оплате.</p>
+
+        <div class="billing-switcher" role="tablist" aria-label="Период тарификации">
+          <button type="button" class="billing-tab" role="tab" data-period="hour" aria-selected="false">Час</button>
+          <button type="button" class="billing-tab" role="tab" data-period="month" aria-selected="false">Месяц</button>
+          <button type="button" class="billing-tab billing-tab--active" role="tab" data-period="year" aria-selected="true">Год <span class="billing-badge">−32%</span></button>
+        </div>
+
+        <!-- Плашка: Час -->
+        <div class="price-panel" id="panel-hour" data-period="hour" hidden>
+          <div class="price-line">
+            <span class="price-inline"><span id="price-main-hourly">13,5</span> ₽ <span class="price-period">/ час</span></span>
+          </div>
+          <div class="price-note">Оплата по факту использования</div>
+          <button type="button" class="price-card-btn price-card-btn--primary btn-pay-action" data-period="hour">Оплатить по факту</button>
+        </div>
+
+        <!-- Плашка: Месяц -->
+        <div class="price-panel" id="panel-month" data-period="month" hidden>
+          <div class="price-line">
+            <span class="price-inline"><span id="price-main-monthly">9 900</span> ₽ <span class="price-period">/ мес</span></span>
+          </div>
+          <div class="price-note">Без обязательств, можно отменить</div>
+          <button type="button" class="price-card-btn price-card-btn--primary btn-pay-action" data-period="month">Оплатить <span id="btn-amount-monthly">9 900</span> ₽</button>
+        </div>
+
+        <!-- Плашка: Год -->
+        <div class="price-panel price-panel--yearly" id="panel-year" data-period="year">
+          <span class="price-card-badge price-card-badge--discount">−32%</span>
+          <div class="price-line">
+            <span class="price-inline"><span id="price-main-yearly">81 000</span> ₽ <span class="price-period">/ год</span></span>
+          </div>
+          <div class="price-card-double">Выходит всего <span class="price-inline"><strong id="price-month-equivalent">6 750</strong> ₽/мес</span></div>
+          <div class="price-old" id="price-old-yearly"><s><span class="price-inline"><span id="price-old-yearly-val">118 800</span> ₽</span></s></div>
+          <div class="warning-block" id="warning-block" role="alert">
+            <svg class="warning-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/>
+            </svg>
+            <p><strong>Тариф предоплатный.</strong> Возврат средств невозможен. Это страховка от невнимательности.</p>
+          </div>
+          <button type="button" class="price-card-btn price-card-btn--primary btn-pay-action" data-period="year">Оплатить <span id="btn-pay-amount">81 000</span> ₽</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Справа: конфигуратор -->
+    <div class="right">
+    <aside class="config-panel">
+      <div class="card">
+      <section class="config-section">
+        <h2 class="section-title">Тип сервера</h2>
+        <div class="tabs" role="tablist">
+          <button type="button" class="tab" role="tab" data-tab="shared" aria-selected="false">Shared Line</button>
+          <button type="button" class="tab tab--active" role="tab" data-tab="dedicated" aria-selected="true">Dedicated Line</button>
+        </div>
+        <p class="tab-desc tab-desc--dedicated">Гарантированные ресурсы. Подходит для баз данных и нагруженных систем.</p>
+        <p class="tab-desc tab-desc--shared" hidden>Ядра процессора делятся между соседями. Подходит для лёгких сайтов.</p>
+      </section>
+
+      <section class="config-section">
+        <h2 class="section-title">Процессор (vCPU)</h2>
+        <div class="option-buttons" id="vcpu-options" role="group" aria-label="Количество ядер">
+          <button type="button" class="option-btn" data-value="2">2</button>
+          <button type="button" class="option-btn" data-value="4">4</button>
+          <button type="button" class="option-btn option-btn--active" data-value="8">8</button>
+          <button type="button" class="option-btn" data-value="16">16</button>
+          <button type="button" class="option-btn" data-value="32">32</button>
+        </div>
+        <span class="option-label"><span id="vcpu-value">8</span> vCPU</span>
+      </section>
+
+      <section class="config-section">
+        <h2 class="section-title">Оперативная память (RAM)</h2>
+        <div class="slider-wrap">
+          <input type="range" id="ram" class="slider" min="4" max="128" step="4" value="32" aria-label="Объём RAM в ГБ">
+          <span class="option-label"><span id="ram-value">32</span> ГБ</span>
+        </div>
+      </section>
+
+      <section class="config-section">
+        <h2 class="section-title">Дисковое пространство</h2>
+        <div class="select-row">
+          <label for="disk-type">Тип диска:</label>
+          <select id="disk-type" aria-label="Тип диска">
+            <option value="nvme">NVMe — быстрый</option>
+            <option value="ssd">SSD — стандартный</option>
+            <option value="hdd">HDD — холодное хранение</option>
+          </select>
+        </div>
+        <div class="slider-wrap">
+          <input type="range" id="disk-size" class="slider" min="50" max="2000" step="50" value="512" aria-label="Объём диска в ГБ">
+          <span class="option-label"><span id="disk-value">512</span> ГБ</span>
+        </div>
+      </section>
+
+      <section class="config-section config-section--network">
+        <h2 class="section-title">Сеть и доп. услуги</h2>
+        <label class="toggle-row">
+          <input type="checkbox" id="public-ip" checked aria-label="Публичный IP">
+          <span class="toggle-label">Публичный IP-адрес</span>
+          <span class="toggle-sublabel">≈ 150 ₽/мес</span>
+        </label>
+        <div class="select-row">
+          <label for="bandwidth">Полоса пропускания:</label>
+          <select id="bandwidth" aria-label="Скорость">
+            <option value="100">100 Мбит/с — бесплатно</option>
+            <option value="1000">1 Гбит/с — платно</option>
+          </select>
+        </div>
+        <label class="toggle-row">
+          <input type="checkbox" id="backups" checked aria-label="Резервное копирование">
+          <span class="toggle-label">Резервное копирование</span>
+        </label>
+        <label class="toggle-row">
+          <input type="checkbox" id="ddos" aria-label="Защита от DDoS">
+          <span class="toggle-label">Защита от DDoS</span>
+        </label>
+      </section>
+      </div>
+    </aside>
+    </div>
+  </main>
+
+  <div class="modal-overlay" id="modal-overlay" aria-hidden="true">
+    <div class="modal" id="modal" role="dialog" aria-labelledby="modal-title" aria-modal="true">
+      <h2 class="modal-title" id="modal-title">Подтверждение заказа</h2>
+      <ul class="modal-list">
+        <li><strong>Сервер:</strong> <span id="modal-config">Config-1 (8 vCPU, 16 RAM)</span></li>
+        <li><strong>Период:</strong> <span id="modal-period">12 месяцев</span></li>
+        <li id="modal-discount-row"><strong>Скидка:</strong> <span class="modal-discount" id="modal-discount">-37 800 ₽</span></li>
+      </ul>
+      <label class="modal-checkbox">
+        <input type="checkbox" id="modal-agree" aria-describedby="modal-agree-desc">
+        <span id="modal-agree-desc">Я согласен с условиями оферты и невозвратным тарифом.</span>
+      </label>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="btn-modal-cancel">Отмена</button>
+        <button type="button" class="btn-primary" id="btn-modal-confirm" disabled>Подтвердить</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
