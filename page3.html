@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Изменение конфигурации сервера — Selectel</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<div class="modal-overlay" id="checkout-modal" aria-hidden="true">
+        <div class="modal modal--checkout" id="checkout-modal-inner" role="dialog" aria-labelledby="checkout-title" aria-modal="true">
+          <h2 class="modal-title" id="checkout-title">Изменение конфигурации</h2>
+          <p class="checkout-subtitle">До окончания периода подписки осталось <strong id="checkout-days">274</strong> дней.</p>
+    
+          <div class="checkout-tooltip" id="checkout-tooltip" role="tooltip">
+            <span class="checkout-tooltip-icon" aria-hidden="true">?</span>
+            <span class="checkout-tooltip-text">Вы оплачиваете только разницу за оставшийся период действия текущей подписки.</span>
+          </div>
+    
+          <div class="checkout-config-summary">
+            <div class="checkout-config-row">
+              <span>RAM</span>
+              <span><span id="table-ram-old">16</span> ГБ → <span id="table-ram-new">32</span> ГБ</span>
+            </div>
+          </div>
+    
+          <div class="checkout-equation" aria-label="Расчёт доплаты">
+            <div class="checkout-equation-row">
+              <span class="checkout-equation-desc">Цена опции <span id="eq-ram-desc">(+16 ГБ RAM за год)</span></span>
+              <span class="checkout-equation-value" id="eq-price-option">12 000 ₽</span>
+            </div>
+            <div class="checkout-equation-row checkout-equation-row--minus">
+              <span class="checkout-equation-desc">Оплаченный остаток <span id="eq-days-used">(91 дн. уже прошло)</span></span>
+              <span class="checkout-equation-value" id="eq-paid-remainder">− 3 000 ₽</span>
+            </div>
+            <div class="checkout-equation-divider"></div>
+            <div class="checkout-equation-row checkout-equation-row--result">
+              <span class="checkout-equation-desc">К доплате за <span id="checkout-days-label">274</span> дней</span>
+              <span class="checkout-equation-value checkout-equation-value--result" id="checkout-total-value">9 000 ₽</span>
+            </div>
+          </div>
+    
+          <div class="modal-actions modal-actions--full">
+            <button type="button" class="btn-secondary" id="btn-checkout-cancel">Отмена</button>
+            <button type="button" class="btn-primary" id="btn-checkout-confirm">Доплатить и применить</button>
+          </div>
+        </div>
+      </div>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
