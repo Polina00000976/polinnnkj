@@ -9,117 +9,49 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
 </head>
-<body>
-  <nav class="navbar">
-    <div class="navbar-left">
-      <b class="navbar-brand">Selectel</b>
-      <a href="index.html" class="nav-link">Страница 1</a>
-      <a href="page2.html" class="nav-link">Страница 2</a>
-    </div>
-    <div class="navbar-actions">
-      <div class="region-select">
-        <select id="region" aria-label="Выбор региона">
-          <option value="ru-1">RU-1 (Санкт-Петербург)</option>
-          <option value="ru-2">RU-2 (Москва)</option>
-        </select>
-      </div>
-      <button type="button" class="btn-nav">В панель управления</button>
-    </div>
-  </nav>
-
-  <div class="hero hero--compact">
-    <h1 class="hero-title">Управление сервером</h1>
-    <p class="hero-sub">Измените конфигурацию — доплата только за оставшийся период</p>
-  </div>
-
-  <main class="main main--single">
-    <div class="card card--server card--elevated">
-      <div class="card-header">
-        <h2 class="section-title">Активный сервер</h2>
-        <span class="card-badge card-badge--active">Активен</span>
-      </div>
-      <div class="server-info server-info--grid">
-        <div class="server-info-item">
-          <span class="server-info-label">Сервер</span>
-          <span class="server-info-value">Config-1 (8 vCPU, <span id="current-ram">16</span> ГБ RAM)</span>
-        </div>
-        <div class="server-info-item">
-          <span class="server-info-label">Подписка до</span>
-          <span class="server-info-value" id="subscription-end">15 ноября 2026</span>
-        </div>
-        <div class="server-info-item">
-          <span class="server-info-label">Осталось дней</span>
-          <span class="server-info-value server-info-value--accent" id="days-left">274</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card card--elevated">
-      <div class="card-header">
-        <h2 class="section-title">Изменить конфигурацию</h2>
-      </div>
-      <p class="section-desc">Увеличьте объём RAM. Доплата будет рассчитана только за оставшиеся 274 дня подписки.</p>
-
-      <div class="config-change-row">
-        <div class="config-change-field config-change-field--highlight">
-          <label class="config-change-label">Оперативная память (RAM)</label>
-          <div class="slider-block">
-            <div class="slider-wrap slider-wrap--with-delta">
-              <input type="range" id="ram-upgrade" class="slider" min="16" max="128" step="16" value="16" aria-label="RAM в ГБ">
-              <span class="option-label option-label--strong"><span id="ram-upgrade-value">16</span> ГБ</span>
-              <span class="delta-label" id="ram-delta-label" hidden><span class="delta-value" id="ram-delta-value">+12 000</span> ₽/год</span>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<div class="modal-overlay" id="checkout-modal" aria-hidden="true">
+        <div class="modal modal--checkout" id="checkout-modal-inner" role="dialog" aria-labelledby="checkout-title" aria-modal="true">
+          <h2 class="modal-title" id="checkout-title">Изменение конфигурации</h2>
+          <p class="checkout-subtitle">До окончания периода подписки осталось <strong id="checkout-days">274</strong> дней.</p>
+    
+          <div class="checkout-tooltip" id="checkout-tooltip" role="tooltip">
+            <span class="checkout-tooltip-icon" aria-hidden="true">?</span>
+            <span class="checkout-tooltip-text">Вы оплачиваете только разницу за оставшийся период действия текущей подписки.</span>
+          </div>
+    
+          <div class="checkout-config-summary">
+            <div class="checkout-config-row">
+              <span>RAM</span>
+              <span><span id="table-ram-old">16</span> ГБ → <span id="table-ram-new">32</span> ГБ</span>
             </div>
           </div>
+    
+          <div class="checkout-equation" aria-label="Расчёт доплаты">
+            <div class="checkout-equation-row">
+              <span class="checkout-equation-desc">Цена опции <span id="eq-ram-desc">(+16 ГБ RAM за год)</span></span>
+              <span class="checkout-equation-value" id="eq-price-option">12 000 ₽</span>
+            </div>
+            <div class="checkout-equation-row checkout-equation-row--minus">
+              <span class="checkout-equation-desc">Оплаченный остаток <span id="eq-days-used">(91 дн. уже прошло)</span></span>
+              <span class="checkout-equation-value" id="eq-paid-remainder">− 3 000 ₽</span>
+            </div>
+            <div class="checkout-equation-divider"></div>
+            <div class="checkout-equation-row checkout-equation-row--result">
+              <span class="checkout-equation-desc">К доплате за <span id="checkout-days-label">274</span> дней</span>
+              <span class="checkout-equation-value checkout-equation-value--result" id="checkout-total-value">9 000 ₽</span>
+            </div>
+          </div>
+    
+          <div class="modal-actions modal-actions--full">
+            <button type="button" class="btn-secondary" id="btn-checkout-cancel">Отмена</button>
+            <button type="button" class="btn-primary" id="btn-checkout-confirm">Доплатить и применить</button>
+          </div>
         </div>
-      </div>
-
-      <button type="button" class="btn-primary btn-apply-config" id="btn-show-checkout" disabled>
-        Рассчитать доплату
-      </button>
-    </div>
-  </main>
-
-  <!-- Экран 2.2: Сводка изменений (Proration Checkout) -->
-  <div class="modal-overlay" id="checkout-modal" aria-hidden="true">
-    <div class="modal modal--checkout" id="checkout-modal-inner" role="dialog" aria-labelledby="checkout-title" aria-modal="true">
-      <h2 class="modal-title" id="checkout-title">Изменение конфигурации</h2>
-      <p class="checkout-subtitle">До окончания периода подписки осталось <strong id="checkout-days">274</strong> дней.</p>
-
-      <div class="checkout-tooltip" id="checkout-tooltip" role="tooltip">
-        <span class="checkout-tooltip-icon" aria-hidden="true">?</span>
-        <span class="checkout-tooltip-text">Вы оплачиваете только разницу за оставшийся период действия текущей подписки.</span>
-      </div>
-
-      <div class="checkout-config-summary">
-        <div class="checkout-config-row">
-          <span>RAM</span>
-          <span><span id="table-ram-old">16</span> ГБ → <span id="table-ram-new">32</span> ГБ</span>
-        </div>
-      </div>
-
-      <div class="checkout-equation" aria-label="Расчёт доплаты">
-        <div class="checkout-equation-row">
-          <span class="checkout-equation-desc">Цена опции <span id="eq-ram-desc">(+16 ГБ RAM за год)</span></span>
-          <span class="checkout-equation-value" id="eq-price-option">12 000 ₽</span>
-        </div>
-        <div class="checkout-equation-row checkout-equation-row--minus">
-          <span class="checkout-equation-desc">Оплаченный остаток <span id="eq-days-used">(91 дн. уже прошло)</span></span>
-          <span class="checkout-equation-value" id="eq-paid-remainder">− 3 000 ₽</span>
-        </div>
-        <div class="checkout-equation-divider"></div>
-        <div class="checkout-equation-row checkout-equation-row--result">
-          <span class="checkout-equation-desc">К доплате за <span id="checkout-days-label">274</span> дней</span>
-          <span class="checkout-equation-value checkout-equation-value--result" id="checkout-total-value">9 000 ₽</span>
-        </div>
-      </div>
-
-      <div class="modal-actions modal-actions--full">
-        <button type="button" class="btn-secondary" id="btn-checkout-cancel">Отмена</button>
-        <button type="button" class="btn-primary" id="btn-checkout-confirm">Доплатить и применить</button>
-      </div>
-    </div>
-  </div>
-
-  <script src="page2.js"></script>
+      </div>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
 </body>
 </html>
